@@ -1,0 +1,10 @@
+name: issues_workflow
+on: 
+    issues:
+      types: [opened, closed]
+jobs:
+    print_issue:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print_metadata
+              run: echo "${{ toJson(github) }}"
