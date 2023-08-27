@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm ci
-      - name: Lint
+      - name: Lint 
         run: npm run lint
       - name: Tests
         run: npm run test
@@ -16,3 +16,13 @@ jobs:
         run: npm run build
       - name: Deploy code
         run: echo "Deploying.."
+  credentials:
+    runs-on: ubuntu-latest
+    env:
+      key1: process.env.KEY1
+      key2: process.env.KEY2
+    steps:
+      - name: printing creds
+        run: |
+          echo "$key1"
+          echo "$key2"
