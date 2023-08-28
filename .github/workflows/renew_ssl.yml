@@ -1,0 +1,29 @@
+name: renew_ssl
+on: workflow_dispatch
+jobs:
+  get_certificate:
+    runs-on: self-hosted-runner
+    steps:
+    - name: get all Certificate
+      run: certbot ls
+  check_status:
+    needs: get_certificate
+    runs-on: self-hosted-runner
+    outputs:
+      to_renew: ${{ steps.check_status.outputs.flag }}
+    steps:
+      - name: checkCertificateStatus
+        id: check_status
+        run: echo "flag=certbot check" >> "$GITHUB_OUTPUT"
+        # Send an output which will tell that the certificate is expired
+  renew_all:
+    runs-on: self-hosted-runner
+    needs: check_status
+    steps:
+      - env:
+          flag: ${{ needs.check_status.outputs.to_renew }}
+        # if:  $flag === true
+        name: Renew certificate
+        run: |
+          echo "$flag"
+          certbot renew
