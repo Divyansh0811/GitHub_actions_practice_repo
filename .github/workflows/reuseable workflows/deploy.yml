@@ -1,0 +1,16 @@
+name: Deploy Code
+on: workflow_call
+jobs:
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output Contents
+        run: ls
+      - name: Deploy Code
+        run: echo "...deploying"
+  

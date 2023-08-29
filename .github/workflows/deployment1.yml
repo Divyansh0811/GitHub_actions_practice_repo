@@ -60,16 +60,7 @@ jobs:
           path: dist
   deploy:
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-files
-      - name: Output Contents
-        run: ls
-      - name: Deploy Code
-        run: echo "...deploying"
+    uses: ./.github/workflows/reuseable workflows/deploy.yml
   report:
     needs: [lint, deploy]
     if: failure()
