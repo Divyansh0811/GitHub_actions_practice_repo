@@ -1,0 +1,8 @@
+name: script_injection_workflow
+on: push
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+    - name: echoing secrets
+      run: "echo ${{ secrets.test_token }}"
