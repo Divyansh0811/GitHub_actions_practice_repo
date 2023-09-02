@@ -1,8 +1,17 @@
 name: script_injection_workflow
-on: push
+on:
+  issues:
+    types:
+      - opened
 jobs:
   inject:
     runs-on: ubuntu-latest
     steps:
-    - name: echoing secrets
-      run: echo "${{ secrets.TEST_TOKEN }}"
+    - name: Assign label
+      run: |
+        issue_title = "${{ github.event.issue.title}}"
+        if [[ "$issue_title" == *"bug"*]]; then
+        echo "Issue is a bug!"
+        else
+        echo "Issue is not a bug!"
+        fi
