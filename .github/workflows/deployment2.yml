@@ -4,7 +4,7 @@ on:
       types: [opened, closed]
 jobs:
     print_issue:
-        runs-on: ubuntu-latest
+        runs-on: [self-hosted, Linux, X64, receive]
         steps:
             - name: print_metadata
               run: echo "${{ toJson(github) }}"
