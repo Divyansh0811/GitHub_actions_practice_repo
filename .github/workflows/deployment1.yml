@@ -5,7 +5,8 @@ on:
       - main
 jobs:
   lint:
-    runs-on: [self-hosted, Linux, X64, receive]
+    # runs-on: [self-hosted, Linux, X64, receive]
+    runs-on: ubuntu-latest
     steps:
       - name: Get Code
         uses: actions/checkout@v3
