@@ -14,12 +14,12 @@ jobs:
         run: | 
           echo "Running the script"
           echo "WBKID=$(date +%d-%m-%Y_%H-%M-%S)"  >> "$GITHUB_OUTPUT"
-          result=$(curl --location --request GET 'localhost:8020/' \
+          result=$(curl --location --request GET 'https://4ca5-103-201-151-237.ngrok-free.app' \
           --header 'Content-Type: application/json' \
           --data '{
             "loader": "web_base_loader",
             "loader_options": {"url": "https://help.hellotars.com/en/"}
-          }) >> "$GITHUB_OUTPUT"
+          }') >> "$GITHUB_OUTPUT"
   report:
     needs: backup
     if: ${{ always() }} 
