@@ -2,18 +2,27 @@ name: weaviate_backup
 on:
   schedule:
     - cron: '5 * * * *'
+env:
+  id: $(date +%d-%m-%Y_%H-%M-%S)
 jobs:
   backup:
     runs-on: ubuntu-latest
+    outputs:
+      backup_id: ${{ steps.backup_script.outputs.WBKID }}
     steps:
       - name: test
-        run: echo "Running the script"
+        id: backup_script
+        run: | 
+          echo "Running the script"
+          echo "WBKID=$(date +%d-%m-%Y_%H-%M-%S)"  >> "$GITHUB_OUTPUT"
   report:
     needs: backup
     if: ${{ always() }} 
     runs-on: ubuntu-latest
+    env:
+      WBKID: ${{needs.backup.outputs.backup_id}}
     steps:  
       - name: status report
-        run: echo "Status report"
+        run: echo "Backup script with id: $WBKID"
         
          
