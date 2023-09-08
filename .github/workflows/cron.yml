@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       backup_id: ${{ steps.backup_script.outputs.WBKID }}
-      result: ${{ steps.backup_script.outputs.result }}
+      api_response: ${{ steps.backup_script.outputs.api_response }}
     steps:
       - name: Execute curl command 
         id: backup_script
@@ -19,14 +19,15 @@ jobs:
           --data '{
             "loader": "web_base_loader",
             "loader_options": {"url": "https://help.hellotars.com/en/"}
-          }') >> "$GITHUB_OUTPUT"
+          }')
+          echo "api_response=$result" >> "$GITHUB_OUTPUT"
   report:
     needs: backup
     if: ${{ always() }} 
     runs-on: ubuntu-latest
     env:
       WBKID: ${{needs.backup.outputs.backup_id}}
-      result: ${{ needs.backup.outputs.result }}
+      result: ${{ needs.backup.outputs.api_response }}
     steps:  
       - name: status report
         run: echo "Backup script with id = $WBKID and result = $result"
