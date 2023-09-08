@@ -23,6 +23,6 @@ jobs:
       WBKID: ${{needs.backup.outputs.backup_id}}
     steps:  
       - name: status report
-        run: echo "Backup script with id: $WBKID"
+        run: echo "Backup script with id = $WBKID "
         
          
