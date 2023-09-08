@@ -1,0 +1,19 @@
+name: weaviate_backup
+on:
+  schedule:
+    - cron: '5 * * * *'
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo "Running the script"
+  report:
+    needs: backup
+    if: ${{ always() }} 
+    runs-on: ubuntu-latest
+    steps:  
+      - name: status report
+        run: echo "Status report"
+        
+         
