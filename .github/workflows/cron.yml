@@ -1,7 +1,7 @@
 name: weaviate_backup
 on:
   schedule:
-    - cron: '5 * * * *'
+    - cron: '*/5 * * * *'
 env:
   id: $(date +%d-%m-%Y_%H-%M-%S)
 jobs:
