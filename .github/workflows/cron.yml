@@ -1,7 +1,7 @@
 name: weaviate_backup
-on:
-  schedule:
-    - cron: '*/5 * * * *'
+on: push
+  # schedule:
+  #   - cron: '*/5 * * * *'
 jobs:
   backup:
     runs-on: ubuntu-latest
