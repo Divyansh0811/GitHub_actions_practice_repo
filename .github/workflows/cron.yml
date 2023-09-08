@@ -7,20 +7,25 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       backup_id: ${{ steps.backup_script.outputs.WBKID }}
+      result: ${{ steps.backup_script.outputs.result }}
     steps:
-      - name: test
+      - name: Execute curl command 
         id: backup_script
         run: | 
           echo "Running the script"
           echo "WBKID=$(date +%d-%m-%Y_%H-%M-%S)"  >> "$GITHUB_OUTPUT"
+          result=$(curl -X POST -H "Content-Type: application/json" -d "{
+            \"id\": \"$WBKID\"
+          }" http://localhost:8040/v1/backups/s3) >> "$GITHUB_OUTPUT"
   report:
     needs: backup
     if: ${{ always() }} 
     runs-on: ubuntu-latest
     env:
       WBKID: ${{needs.backup.outputs.backup_id}}
+      result: ${{ needs.backup.outputs.result }}
     steps:  
       - name: status report
-        run: echo "Backup script with id = $WBKID "
+        run: echo "Backup script with id = $WBKID and result = $result"
         
          
